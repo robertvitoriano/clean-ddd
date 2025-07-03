@@ -1,3 +1,5 @@
+import { Answer } from "../entities/answer";
+
 export interface IAnswersRepository{
-  create: () => Promise<void>
+  create: (answer:Answer) => Promise<void>
 }
