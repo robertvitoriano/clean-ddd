@@ -13,7 +13,7 @@ beforeEach(() => {
 })
 describe("Create question", () => {
   it("Should be able to get a question by slug", async () => {
-    const slug = Slug.createFromText("Testing slug now")
+    const slug = Slug.create("Testing slug now")
     const question = Question.create({
       title: "Test title",
       content: "come testing content",
