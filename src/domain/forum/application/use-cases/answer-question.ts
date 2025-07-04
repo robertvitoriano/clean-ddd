@@ -15,7 +15,6 @@ export class AnswerQuestionUseCase {
   constructor(private answersRepository: IAnswersRepository) {}
   async execute({
     instructorId,
-    questionId,
     content,
   }: AnswerQuestionUseCaseRequest): Promise<AnswerQuestionUseCaseResponse> {
     const answer = Answer.create({
