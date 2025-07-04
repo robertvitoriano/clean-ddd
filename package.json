@@ -3,15 +3,20 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "test": "npx vitest run",
-    "test:watch":"npx vitest run --watch"
+    "test:watch": "npx vitest run --watch",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
     "@types/node": "^20.12.12",
+    "@typescript-eslint/eslint-plugin": "^8.35.1",
+    "eslint": "^9.30.1",
     "typescript": "^5.4.5",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^1.6.1"
