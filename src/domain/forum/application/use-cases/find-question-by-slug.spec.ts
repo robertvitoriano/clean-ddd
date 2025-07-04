@@ -14,7 +14,9 @@ beforeEach(() => {
 })
 describe("Create question", () => {
   it("Should be able to get a question by slug", async () => {
-    const question = makeQuestion()
+    const question = makeQuestion({
+      slug:Slug.create("testing-slug")
+    })
     await questionsRepository.create(question)
     const result = await sut.execute({ slug: question.slug.value })
 

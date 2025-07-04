@@ -7,9 +7,7 @@ export class Slug {
     return new Slug(value)
   }
   static createFromText(text: string) {
-    console.log({
-      textformatted: text.replace(/\s+/g, '-').toLocaleLowerCase(),
-    })
+
     const slugText = text
       .replace(/\s+/g, '-')
       .toLocaleLowerCase()
