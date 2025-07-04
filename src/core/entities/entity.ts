@@ -7,4 +7,7 @@ export class Entity<T> {
     this.props = props
     this._id = id ?? new UniqueEntityId(id)
   }
+  get id(){
+    return this._id
+  }
 }
