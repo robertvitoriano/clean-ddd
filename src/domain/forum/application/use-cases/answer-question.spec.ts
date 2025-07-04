@@ -1,17 +1,20 @@
-import { AnswerQuestionUseCase } from './answer-question'
-import { IAnswersRepository } from '../repositories/answers-repository'
+import { AnswerQuestionUseCase } from "./answer-question"
+import { IAnswersRepository } from "../repositories/answers-repository"
+import { InMemoryAnswersRepository } from "@/test/repositories/in-memory-answers-repository"
 
-class FakeAnswersRepository implements IAnswersRepository {
-  async create() {}
-}
-test('Create an answer', () => {
-  const answersRepository = new FakeAnswersRepository()
-  const answerQuestion = new AnswerQuestionUseCase(answersRepository)
-  const answer = answerQuestion.execute({
-    instructorId: '1',
-    questionId: '1',
-    content: 'Nova resposta',
+let answersRepository: IAnswersRepository
+beforeEach(() => {
+  answersRepository = new InMemoryAnswersRepository()
+})
+describe("Create an answer", () => {
+  it("Should be able to create an answer", () => {
+    const answerQuestion = new AnswerQuestionUseCase(answersRepository)
+    const answer = answerQuestion.execute({
+      instructorId: "1",
+      questionId: "1",
+      content: "Nova resposta",
+    })
+
+    expect(answer.content).toEqual("Nova resposta")
   })
-
-  expect(answer.content).toEqual('Nova resposta')
 })
