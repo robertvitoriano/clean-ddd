@@ -6,7 +6,7 @@ interface QuestionProps {
   title: string
   content: string
   authorId: UniqueEntityId
-  bestAnswerId: UniqueEntityId
+  bestAnswerId?: UniqueEntityId
   slug: Slug
   createdAt: Date
   updatedAt?: Date
@@ -32,10 +32,6 @@ export class Question extends Entity<QuestionProps> {
 
   get authorId() {
     return this.props?.authorId
-  }
-
-  get bestAnswerId() {
-    return this.props?.bestAnswerId
   }
 
   set bestAnswerId(bestAnswerId: UniqueEntityId) {
