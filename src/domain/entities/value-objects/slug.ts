@@ -5,15 +5,17 @@ export class Slug {
   }
 
   static createFromText(text: string) {
-    console.log({ textformatted: text.replace(/\s+/g, "-") .toLocaleLowerCase()})
+    console.log({
+      textformatted: text.replace(/\s+/g, '-').toLocaleLowerCase(),
+    })
     const slugText = text
-      .replace(/\s+/g, "-")
+      .replace(/\s+/g, '-')
       .toLocaleLowerCase()
-      .normalize("NFKD")
+      .normalize('NFKD')
       .trim()
-      .replace(/_/g, "-")
+      .replace(/_/g, '-')
       .replace(/[^\w-]+/g, '')
-      .replace(/--+/, "-")
+      .replace(/--+/, '-')
       .replace(/$-/g, '')
     return new Slug(slugText)
   }

@@ -1,5 +1,5 @@
-import { Answer } from "../entities/answer";
+import { Answer } from '../entities/answer'
 
-export interface IAnswersRepository{
-  create: (answer:Answer) => Promise<void>
+export interface IAnswersRepository {
+  create: (answer: Answer) => Promise<void>
 }

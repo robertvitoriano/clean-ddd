@@ -1,7 +1,7 @@
-import { Slug } from "@/domain/entities/value-objects/slug"
-import { Entity } from "@/core/entities/entity"
-import { UniqueEntityId } from "@/core/entities/unique-entity-id"
-import { Optional } from "@/core/types/optional"
+import { Slug } from '@/domain/entities/value-objects/slug'
+import { Entity } from '@/core/entities/entity'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { Optional } from '@/core/types/optional'
 interface QuestionProps {
   title: string
   content: string
@@ -37,7 +37,8 @@ export class Question extends Entity<QuestionProps> {
   get bestAnswerId() {
     return this.props?.bestAnswerId
   }
-  set bestAnswerId(bestAnswerId:UniqueEntityId) {
+
+  set bestAnswerId(bestAnswerId: UniqueEntityId) {
     this.props.bestAnswerId = bestAnswerId
     this.update()
   }
@@ -45,6 +46,7 @@ export class Question extends Entity<QuestionProps> {
   get slug() {
     return this.props?.slug
   }
+
   get createdAt() {
     return this.props?.createdAt
   }
@@ -54,12 +56,16 @@ export class Question extends Entity<QuestionProps> {
   }
 
   static create(
-    props: Optional<QuestionProps, "createdAt" | "slug">,
-    id?: UniqueEntityId
+    props: Optional<QuestionProps, 'createdAt' | 'slug'>,
+    id?: UniqueEntityId,
   ): Question {
     return new Question(
-      { ...props, slug: props.slug ?? Slug.createFromText(props.title), createdAt: new Date() },
-      id
+      {
+        ...props,
+        slug: props.slug ?? Slug.createFromText(props.title),
+        createdAt: new Date(),
+      },
+      id,
     )
   }
 
@@ -69,6 +75,6 @@ export class Question extends Entity<QuestionProps> {
 
   get excerpt() {
     this.update()
-    return this.content.substring(0, 120).trimEnd().concat("...")
+    return this.content.substring(0, 120).trimEnd().concat('...')
   }
 }
