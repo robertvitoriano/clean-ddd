@@ -30,7 +30,7 @@ describe("Chose question best answer", () => {
 
     expect(result.question.bestAnswerId?.toValue()).toEqual(answer.id.toValue())
   })
-  it("Should not be able to choose question best answer", async () => {
+  it("Should not be able to choose question best answer of a question from other author", async () => {
     const question = makeQuestion({})
     const answer = makeAnswer({
       questionId: question.id,
