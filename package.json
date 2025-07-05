@@ -9,7 +9,8 @@
     "test:watch": "npx vitest run --watch",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint src --ext .ts",
-    "lint:fix": "eslint src --ext .ts --fix"
+    "lint:fix": "eslint src --ext .ts --fix",
+    "untrack":"git rm -r --cached"
   },
   "author": "",
   "license": "ISC",
