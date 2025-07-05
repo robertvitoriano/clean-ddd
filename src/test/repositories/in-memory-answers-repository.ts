@@ -8,6 +8,12 @@ export class InMemoryAnswersRepository implements IAnswersRepository {
       (answer) => answer.id.toValue() !== answerToDelete.id.toValue()
     )
   }
+  async save(answer: Answer): Promise<void> {
+    const originalAnswerIndex = this.answers.findIndex(
+      (q) => answer.id.toValue() === q.id.toValue()
+    )
+    this.answers[originalAnswerIndex] = answer
+  }
   async findById(answerId: string): Promise<Answer | null> {
     return this.answers.find((answer) => answer.id.toValue() === answerId) || null
   }
