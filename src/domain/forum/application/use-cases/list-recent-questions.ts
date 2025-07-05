@@ -2,7 +2,7 @@ import { Question } from "../../enterprise/entities/question"
 import { IQuestionsRepository } from "../repositories/questions-repository"
 
 interface ListRecentQuestionsCaseRequest {
-  slug: string
+  page:number
 }
 interface ListRecentQuestionsCaseResponse {
   questions: Question[]
@@ -11,10 +11,10 @@ interface ListRecentQuestionsCaseResponse {
 export class ListRecentQuestionsCase {
   constructor(private questionsRepository: IQuestionsRepository) {}
   async execute({
-    slug,
+    page,
   }: ListRecentQuestionsCaseRequest): Promise<ListRecentQuestionsCaseResponse> {
     const questions = await this.questionsRepository.findManyRecent({
-      page: 1,
+      page,
       perPage: 10,
     })
     return { questions }

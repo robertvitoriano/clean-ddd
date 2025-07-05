@@ -3,9 +3,9 @@ import { IQuestionsRepository } from "@/domain/forum/application/repositories/qu
 import { Question } from "@/domain/forum/enterprise/entities/question"
 
 export class InMemoryQuestionsRepository implements IQuestionsRepository {
-  async findManyRecent(params:PaginationParams): Promise<Question[]>{
-    
-    return this.questions
+  async findManyRecent({ page, perPage }: PaginationParams): Promise<Question[]> {
+    const offset = perPage * (page - 1)
+    return this.questions.slice(offset, offset + perPage)
   }
 
   async save(question: Question): Promise<void> {
