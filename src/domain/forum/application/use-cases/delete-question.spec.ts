@@ -1,9 +1,9 @@
 import { InMemoryQuestionsRepository } from "@/test/repositories/in-memory-questions-repository"
-import { IQuestionRepository } from "../repositories/questions-repository"
+import { IQuestionsRepository } from "../repositories/questions-repository"
 import { DeleteQuestionUseCase } from "./delete-question"
 import { makeQuestion } from "@/test/factories/make-question"
 
-let questionsRepository: IQuestionRepository
+let questionsRepository: IQuestionsRepository
 let sut: DeleteQuestionUseCase
 beforeEach(() => {
   questionsRepository = new InMemoryQuestionsRepository()

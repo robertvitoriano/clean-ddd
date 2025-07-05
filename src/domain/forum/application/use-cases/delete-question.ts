@@ -1,4 +1,4 @@
-import { IQuestionRepository } from "../repositories/questions-repository"
+import { IQuestionsRepository } from "../repositories/questions-repository"
 
 interface DeleteQuestionUseCaseRequest {
   questionId: string
@@ -8,7 +8,7 @@ interface DeleteQuestionUseCaseRequest {
 interface DeleteQuestionUseCaseResponse {}
 
 export class DeleteQuestionUseCase {
-  constructor(private questionsRepository: IQuestionRepository) {}
+  constructor(private questionsRepository: IQuestionsRepository) {}
   async execute({
     questionId,
     authorId

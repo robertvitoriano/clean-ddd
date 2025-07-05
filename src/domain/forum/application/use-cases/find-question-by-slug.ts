@@ -1,5 +1,5 @@
 import { Question } from "../../enterprise/entities/question"
-import { IQuestionRepository } from "../repositories/questions-repository"
+import { IQuestionsRepository } from "../repositories/questions-repository"
 
 interface FindQuestionBySlugUseCaseRequest {
   slug:string
@@ -9,7 +9,7 @@ interface FindQuestionBySlugUseCaseResponse {
 }
 
 export class FindQuestionBySlugUseCase {
-  constructor(private questionsRepository: IQuestionRepository) {}
+  constructor(private questionsRepository: IQuestionsRepository) {}
   async execute({
     slug
   }: FindQuestionBySlugUseCaseRequest): Promise<FindQuestionBySlugUseCaseResponse> {

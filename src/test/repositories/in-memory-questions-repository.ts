@@ -1,7 +1,12 @@
-import { IQuestionRepository } from "@/domain/forum/application/repositories/questions-repository"
+import { PaginationParams } from "@/core/repositories/pagination-params"
+import { IQuestionsRepository } from "@/domain/forum/application/repositories/questions-repository"
 import { Question } from "@/domain/forum/enterprise/entities/question"
 
-export class InMemoryQuestionsRepository implements IQuestionRepository {
+export class InMemoryQuestionsRepository implements IQuestionsRepository {
+  async findManyRecent(params:PaginationParams): Promise<Question[]>{
+    
+    return this.questions
+  }
 
   async save(question: Question): Promise<void> {
     const originalQuestionIndex = this.questions.findIndex(

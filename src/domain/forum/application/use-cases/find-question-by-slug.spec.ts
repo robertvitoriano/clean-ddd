@@ -1,10 +1,10 @@
 import { InMemoryQuestionsRepository } from "@/test/repositories/in-memory-questions-repository"
-import { IQuestionRepository } from "../repositories/questions-repository"
+import { IQuestionsRepository } from "../repositories/questions-repository"
 import { FindQuestionBySlugUseCase } from "./find-question-by-slug"
 import { Slug } from "../../enterprise/entities/value-objects/slug"
 import { makeQuestion } from "@/test/factories/make-question"
 
-let questionsRepository: IQuestionRepository
+let questionsRepository: IQuestionsRepository
 let sut: FindQuestionBySlugUseCase
 beforeEach(() => {
   questionsRepository = new InMemoryQuestionsRepository()

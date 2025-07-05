@@ -1,5 +1,5 @@
 import { title } from "process"
-import { IQuestionRepository } from "../repositories/questions-repository"
+import { IQuestionsRepository } from "../repositories/questions-repository"
 
 interface EditQuestionUseCaseRequest {
   authorId: string
@@ -11,7 +11,7 @@ interface EditQuestionUseCaseRequest {
 interface EditQuestionUseCaseResponse {}
 
 export class EditQuestionUseCase {
-  constructor(private questionsRepository: IQuestionRepository) {}
+  constructor(private questionsRepository: IQuestionsRepository) {}
   async execute({
     questionId,
     authorId,
