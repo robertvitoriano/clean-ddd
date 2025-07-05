@@ -33,7 +33,7 @@ describe("Create question", () => {
 
     const isOrdered = resultPage1.questions.every((question, index, arr) => {
       if (index === 0) return true
-      return question.createdAt.getTime() <= arr[index - 1].createdAt.getTime()
+      return arr[index - 1].createdAt.getTime() <= question.createdAt.getTime() 
     })
     
     expect(isOrdered).toBe(true)
