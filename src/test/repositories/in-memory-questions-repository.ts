@@ -7,7 +7,7 @@ export class InMemoryQuestionsRepository implements IQuestionsRepository {
     const offset = perPage * (page - 1)
     return this.questions
     .slice()
-    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+    .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
     .slice(offset, offset + perPage)
   }
 

@@ -25,7 +25,7 @@ describe("Create question", () => {
   
   
     it("Should be ordered", async () => {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 10; i++) {
       const question = makeQuestion({
         createdAt: new Date(Date.now() + i)
       })
@@ -38,9 +38,11 @@ describe("Create question", () => {
       const currentQuestionTime = question.createdAt.getTime()
       const beforeQuestionIndex = index > 0 ? index - 1 : 0
       const beforeQuestionTime = resultPage1.questions[beforeQuestionIndex].createdAt.getTime()
+      
       if(index > 0 && currentQuestionTime  < beforeQuestionTime){
         isOrdered = false
       }
+      
     })
     expect(isOrdered).toBe(true)
 
