@@ -2,8 +2,14 @@ import { IQuestionRepository } from "@/domain/forum/application/repositories/que
 import { Question } from "@/domain/forum/enterprise/entities/question"
 
 export class InMemoryQuestionsRepository implements IQuestionRepository {
+  async update(question: Question): Promise<void> {
+    const originalQuestionIndex = this.questions.findIndex(
+      (q) => question.id.toValue() === q.id.toValue()
+    )
+    this.questions[originalQuestionIndex] = question
+  }
   async delete(question: Question): Promise<void> {
-    this.questions = this.questions.filter(item => item.id !== question.id)
+    this.questions = this.questions.filter((item) => item.id !== question.id)
   }
   async findById(questionId: string): Promise<Question | null> {
     return this.questions.find((question) => question.id.toString() === questionId) || null

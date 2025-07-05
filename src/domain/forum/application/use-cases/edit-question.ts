@@ -1,9 +1,11 @@
+import { title } from "process"
 import { IQuestionRepository } from "../repositories/questions-repository"
 
 interface EditQuestionUseCaseRequest {
   authorId: string
   title: string
   content: string
+  questionId: string
 }
 
 interface EditQuestionUseCaseResponse {}
@@ -13,6 +15,8 @@ export class EditQuestionUseCase {
   async execute({
     questionId,
     authorId,
+    content,
+    title,
   }: EditQuestionUseCaseRequest): Promise<EditQuestionUseCaseResponse> {
     const question = await this.questionsRepository.findById(questionId)
     if (!question) {
@@ -21,7 +25,10 @@ export class EditQuestionUseCase {
     if (question.authorId.toString() !== authorId) {
       throw new Error("Unauthorized")
     }
-    await this.questionsRepository.edit(question)
+    question.title = title
+    question.content = content
+    await this.questionsRepository.update(question)
+
     return {}
   }
 }
