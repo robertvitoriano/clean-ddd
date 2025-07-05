@@ -8,7 +8,7 @@ export class InMemoryQuestionsRepository implements IQuestionsRepository {
     return this.questions
     .slice()
     .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-    .slice(offset, offset + perPage)
+    .slice(offset, offset * perPage)
   }
 
   async save(question: Question): Promise<void> {
