@@ -2,7 +2,8 @@ import { IQuestionRepository } from "@/domain/forum/application/repositories/que
 import { Question } from "@/domain/forum/enterprise/entities/question"
 
 export class InMemoryQuestionsRepository implements IQuestionRepository {
-  async update(question: Question): Promise<void> {
+
+  async save(question: Question): Promise<void> {
     const originalQuestionIndex = this.questions.findIndex(
       (q) => question.id.toValue() === q.id.toValue()
     )
