@@ -38,6 +38,9 @@ export class Question extends Entity<QuestionProps> {
     this.props.bestAnswerId = bestAnswerId
     this.update()
   }
+  get bestAnswerId():UniqueEntityId | undefined{
+    return this.props.bestAnswerId
+  }
 
   get slug() {
     return this.props?.slug

@@ -13,6 +13,6 @@ export function makeQuestion(override: Partial<QuestionProps>, id?: UniqueEntity
     },
     id
   )
-  console.log(question)
+
   return question
 }
