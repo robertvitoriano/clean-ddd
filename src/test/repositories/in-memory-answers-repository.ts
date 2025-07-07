@@ -1,7 +1,19 @@
+import { PaginationParams } from "@/core/repositories/pagination-params"
 import { IAnswersRepository } from "@/domain/forum/application/repositories/answers-repository"
 import { Answer } from "@/domain/forum/enterprise/entities/answer"
 
 export class InMemoryAnswersRepository implements IAnswersRepository {
+  async findManyByQuestionId(
+    questionId: string,
+    { page, perPage }: PaginationParams
+  ): Promise<Answer[]> {
+    
+    const offset = perPage * (page - 1)
+    
+    return this.answers
+      .filter((item) => item.questionId.toValue() === questionId)
+      .slice(offset, offset + perPage)
+  }
   public answers: Answer[] = []
   async delete(answerToDelete: Answer): Promise<void> {
     this.answers = this.answers.filter(
