@@ -3,7 +3,7 @@ import { IAnswersRepository } from "../repositories/answers-repository"
 import { CommentOnAnswerUseCase } from "./comment-on-answer"
 import { IAnswerCommentsRepository } from "../repositories/answer-comments-repository"
 import { makeAnswer } from "@/test/factories/make-answer"
-import { InMemoryAnswerCommentsRepository } from "@/test/repositories/answer-comments-repository"
+import { InMemoryAnswerCommentsRepository } from "@/test/repositories/in-memory-answer-comments-repository"
 
 
 let answersRepository: IAnswersRepository

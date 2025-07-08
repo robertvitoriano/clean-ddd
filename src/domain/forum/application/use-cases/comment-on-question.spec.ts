@@ -4,8 +4,6 @@ import { CommentOnQuestionUseCase } from "./comment-on-question"
 import { IQuestionCommentsRepository } from "../repositories/question-comments-repository"
 import { InMemoryQuestionCommentsRepository } from "@/test/repositories/in-memory-question-comments-repository"
 import { makeQuestion } from "@/test/factories/make-question"
-import { QuestionComment } from "../../enterprise/entities/question-comment"
-import { UniqueEntityId } from "@/core/entities/unique-entity-id"
 
 let questionsRepository: IQuestionsRepository
 let questionCommentsRepository: IQuestionCommentsRepository

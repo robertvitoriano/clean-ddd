@@ -8,9 +8,20 @@ export class InMemoryAnswerCommentsRepository implements IAnswerCommentsReposito
     this.answerComments.push(answerComment)
   }
   findBySlug!: (slug: string) => Promise<AnswerComment | null>;
-  delete!: (AnswerComment: AnswerComment) => Promise<void>;
   save!: (answerComment: AnswerComment) => Promise<void>;
-  findById!: (answerCommentId: string) => Promise<AnswerComment | null>;
   findManyRecent!: (params: PaginationParams) => Promise<AnswerComment[]>;
+  async delete(answerComment: AnswerComment): Promise<void> {
+    const answerCommentIndex = this.answerComments.findIndex(
+      (item) => item.id.toValue() === answerComment.id.toValue()
+    )
+    this.answerComments.splice(answerCommentIndex, 1)
+  }
+  async findById(answercommentId: string): Promise<AnswerComment | null> {
+    return (
+      this.answerComments.find(
+        (answerComment) => answerComment.id.toValue() === answercommentId
+      ) || null
+    )
+  }
   
 }
