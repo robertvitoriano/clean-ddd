@@ -6,5 +6,5 @@ export interface IQuestionCommentsRepository {
   delete: (questioncomment: QuestionComment) => Promise<void>
   save: (questioncomment: QuestionComment) => Promise<void>
   findById: (questioncommentId: string) => Promise<QuestionComment | null>
-  findManyRecent:(params:PaginationParams) => Promise<QuestionComment[]>
+  findManyByQuestionId:(questionId:string ,params:PaginationParams) => Promise<QuestionComment[]>
 }

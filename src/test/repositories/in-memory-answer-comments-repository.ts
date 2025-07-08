@@ -3,6 +3,12 @@ import { IAnswerCommentsRepository } from "@/domain/forum/application/repositori
 import { AnswerComment } from "@/domain/forum/enterprise/entities/answer-comment";
 
 export class InMemoryAnswerCommentsRepository implements IAnswerCommentsRepository{
+  async findManyByAnswerId (answerId: string, {page, perPage}: PaginationParams):Promise<AnswerComment[]>{
+    const offset = perPage * (page - 1)
+    return this.answerComments
+    .filter(comment => comment.answerId.toValue() ===answerId)
+    .slice(offset, offset + perPage)
+  };
   public answerComments:AnswerComment[] = []
   async create(answerComment: AnswerComment):Promise<void>{
     this.answerComments.push(answerComment)

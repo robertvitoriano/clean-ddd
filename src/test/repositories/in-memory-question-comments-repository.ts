@@ -3,6 +3,12 @@ import { IQuestionCommentsRepository } from "@/domain/forum/application/reposito
 import { QuestionComment } from "@/domain/forum/enterprise/entities/question-comment"
 
 export class InMemoryQuestionCommentsRepository implements IQuestionCommentsRepository {
+  async findManyByQuestionId (questionId: string, {page, perPage}: PaginationParams):Promise<QuestionComment[]>{
+    const offset = perPage * (page - 1)
+    return this.questionComments
+      .filter(q => q.questionId.toString() ===questionId)
+      .slice(offset, offset + perPage )
+  }
   public questionComments: QuestionComment[] = []
   async create(questionComment: QuestionComment): Promise<void> {
     this.questionComments.push(questionComment)
