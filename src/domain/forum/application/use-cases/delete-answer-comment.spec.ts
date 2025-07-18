@@ -3,6 +3,7 @@ import { IAnswerCommentsRepository } from "../repositories/answer-comments-repos
 import { InMemoryAnswerCommentsRepository } from "@/test/repositories/in-memory-answer-comments-repository"
 import { DeleteAnswerCommentUseCase } from "./delete-answer-comment"
 import { Failure } from "@/core/result"
+import { NotAllowedError } from "./errors/not-allowed-error"
 
 let answerCommentsRepository: IAnswerCommentsRepository
 let sut: DeleteAnswerCommentUseCase
@@ -30,7 +31,8 @@ describe("Delete answer", () => {
         authorId: "test",
       })
       
-    expect(result).toBeInstanceOf(Failure)
+    expect(result.isFailure()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
     
   })
 })
