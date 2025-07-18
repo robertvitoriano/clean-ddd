@@ -2,6 +2,7 @@ import { makeAnswerComment } from "@/test/factories/make-anwer-comment"
 import { IAnswerCommentsRepository } from "../repositories/answer-comments-repository"
 import { InMemoryAnswerCommentsRepository } from "@/test/repositories/in-memory-answer-comments-repository"
 import { DeleteAnswerCommentUseCase } from "./delete-answer-comment"
+import { Failure } from "@/core/result"
 
 let answerCommentsRepository: IAnswerCommentsRepository
 let sut: DeleteAnswerCommentUseCase
@@ -23,12 +24,13 @@ describe("Delete answer", () => {
   it("Should not be  be able to Delete a answer comment from another author", async () => {
     const answerComment = makeAnswerComment({})
     await answerCommentsRepository.create(answerComment)
-
-    expect(async () => {
-      return await sut.execute({
+    
+    const result = await  sut.execute({
         answerCommentId: answerComment.id.toString(),
         authorId: "test",
       })
-    }).rejects.toThrowError()
+      
+    expect(result).toBeInstanceOf(Failure)
+    
   })
 })
