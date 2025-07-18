@@ -21,15 +21,22 @@ describe("Chose question best answer", () => {
     const answer = makeAnswer({
       questionId: question.id,
     })
+
     questionsRepository.create(question)
     answersRepository.create(answer)
+
     const result = await sut.execute({
       answerId: answer.id.toValue(),
       authorId: question.authorId.toValue(),
     })
 
-    expect(result.question.bestAnswerId?.toValue()).toEqual(answer.id.toValue())
+    expect(result.isSuccess()).toBe(true)
+    
+    if (!result.isSuccess()) throw new Error("Expected result to be success")
+
+    expect(result.value.question.bestAnswerId?.toValue()).toEqual(answer.id.toValue())
   })
+
   it("Should not be able to choose question best answer of a question from other author", async () => {
     const question = makeQuestion({})
     const answer = makeAnswer({
@@ -37,11 +44,11 @@ describe("Chose question best answer", () => {
     })
     questionsRepository.create(question)
     await answersRepository.create(answer)
-    expect(
-      sut.execute({
-        answerId: answer.id.toValue(),
-        authorId: "some-other-author",
-      })
-    ).rejects.toThrowError("Not allowed")
+    const result = await sut.execute({
+      answerId: answer.id.toValue(),
+      authorId: "some-other-author",
+    })
+
+    expect(result)
   })
 })

@@ -1,5 +1,8 @@
 import { title } from "process"
 import { IQuestionsRepository } from "../repositories/questions-repository"
+import { ResourceNotFoundError } from "./errors/resource-not-found-error"
+import { NotAllowedError } from "./errors/not-allowed-error"
+import { failure, Result, success } from "@/core/result"
 
 interface EditQuestionUseCaseRequest {
   authorId: string
@@ -8,7 +11,7 @@ interface EditQuestionUseCaseRequest {
   questionId: string
 }
 
-interface EditQuestionUseCaseResponse {}
+type EditQuestionUseCaseResponse = Result<ResourceNotFoundError | NotAllowedError,{}> 
 
 export class EditQuestionUseCase {
   constructor(private questionsRepository: IQuestionsRepository) {}
@@ -20,15 +23,15 @@ export class EditQuestionUseCase {
   }: EditQuestionUseCaseRequest): Promise<EditQuestionUseCaseResponse> {
     const question = await this.questionsRepository.findById(questionId)
     if (!question) {
-      throw new Error("Question not found")
+      return failure(new ResourceNotFoundError())
     }
     if (question.authorId.toString() !== authorId) {
-      throw new Error("Unauthorized")
+      return failure(new NotAllowedError())
     }
     question.title = title
     question.content = content
     await this.questionsRepository.save(question)
 
-    return {}
+    return success({})
   }
 }

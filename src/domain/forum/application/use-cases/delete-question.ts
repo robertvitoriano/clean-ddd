@@ -1,11 +1,14 @@
+import { failure, Result, success } from "@/core/result"
 import { IQuestionsRepository } from "../repositories/questions-repository"
+import { ResourceNotFoundError } from "./errors/resource-not-found-error"
+import { NotAllowedError } from "./errors/not-allowed-error"
 
 interface DeleteQuestionUseCaseRequest {
   questionId: string
   authorId:string
 }
 
-interface DeleteQuestionUseCaseResponse {}
+type DeleteQuestionUseCaseResponse = Result<ResourceNotFoundError | NotAllowedError, {}>
 
 export class DeleteQuestionUseCase {
   constructor(private questionsRepository: IQuestionsRepository) {}
@@ -15,12 +18,12 @@ export class DeleteQuestionUseCase {
   }: DeleteQuestionUseCaseRequest): Promise<DeleteQuestionUseCaseResponse> {
     const question = await this.questionsRepository.findById(questionId)
     if (!question) {
-      throw new Error("Question not found")
+      return failure(new ResourceNotFoundError())
     }
     if (question.authorId.toString() !== authorId) {
-      throw new Error("Unauthorized")
+      return failure(new NotAllowedError())
     }
     await this.questionsRepository.delete(question)
-    return {}
+    return success({})
   }
 }

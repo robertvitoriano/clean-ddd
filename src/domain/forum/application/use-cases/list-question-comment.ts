@@ -1,23 +1,31 @@
-import { IQuestionCommentsRepository } from "../repositories/question-comments-repository";
-import { IQuestionsRepository } from "../repositories/questions-repository";
+import { failure, Result } from "@/core/result"
+import { IQuestionCommentsRepository } from "../repositories/question-comments-repository"
+import { IQuestionsRepository } from "../repositories/questions-repository"
+import { ResourceNotFoundError } from "./errors/resource-not-found-error"
+export type ListQuestionCommentRequest = {
+  questionId: string
+  page: number
+}
 
+export type ListQuestionCommentResponse = Result<ResourceNotFoundError, { comments: Comment[] }>
 export class ListQuestionCommentsUseCase {
-  
-  constructor(private readonly questionsRepository:IQuestionsRepository, private readonly commentsRepository:IQuestionCommentsRepository){}
-  
-  async execute(questionId:string, page:number){
-    
+  constructor(
+    private readonly questionsRepository: IQuestionsRepository,
+    private readonly commentsRepository: IQuestionCommentsRepository
+  ) {}
+
+  async execute({ questionId, page }: ListQuestionCommentRequest) {
     const question = await this.questionsRepository.findById(questionId)
-    
-    if(!question){
-      throw new Error("Question not found!")
+
+    if (!question) {
+      return failure(new ResourceNotFoundError())
     }
-    
-    const comments = await this.commentsRepository.findManyByQuestionId(questionId,{page, perPage:10})
-    
-    return {comments}
-    
+
+    const comments = await this.commentsRepository.findManyByQuestionId(questionId, {
+      page,
+      perPage: 10,
+    })
+
+    return { comments }
   }
-  
-  
 }

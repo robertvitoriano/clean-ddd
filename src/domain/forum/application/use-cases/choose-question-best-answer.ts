@@ -1,15 +1,20 @@
 import { IAnswersRepository } from "@/domain/forum/application/repositories/answers-repository"
 import { Question } from "../../enterprise/entities/question"
 import { IQuestionsRepository } from "../repositories/questions-repository"
-import { UniqueEntityId } from "@/core/entities/unique-entity-id"
+import { NotAllowedError } from "./errors/not-allowed-error"
+import { ResourceNotFoundError } from "./errors/resource-not-found-error"
+import { failure, Result, success } from "@/core/result"
 
 interface ChooseQuestionBestAnswerUseCaseRequest {
   answerId: string
   authorId: string
 }
-interface ChooseQuestionBestAnswerUseCaseResponse {
-  question: Question
-}
+export type ChooseQuestionBestAnswerUseCaseResponse = Result<
+  NotAllowedError | ResourceNotFoundError,
+  {
+    question: Question
+  }
+>
 
 export class ChooseQuestionBestAnswerUseCase {
   constructor(
@@ -22,18 +27,18 @@ export class ChooseQuestionBestAnswerUseCase {
   }: ChooseQuestionBestAnswerUseCaseRequest): Promise<ChooseQuestionBestAnswerUseCaseResponse> {
     const answer = await this.answersRepository.findById(answerId)
     if (!answer) {
-      throw new Error("Answer not found")
+      return failure(new ResourceNotFoundError())
     }
     const question = await this.questionsRepository.findById(answer.questionId.toValue())
     if (!question) {
-      throw new Error("Question not found")
+      return failure(new ResourceNotFoundError())
     }
     if (question.authorId.toValue() !== authorId) {
-      throw new Error("Not allowed")
+      return failure(new NotAllowedError())
     }
     question.bestAnswerId = answer.id
     await this.questionsRepository.save(question)
 
-    return { question }
+    return success({ question })
   }
 }

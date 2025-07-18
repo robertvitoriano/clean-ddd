@@ -15,7 +15,7 @@ describe("Create an answer", () => {
       questionId: "1",
       content: "Nova resposta",
     })
-
-    expect(result.answer.content).toEqual("Nova resposta")
+    
+    expect(result.value?.answer.content).toEqual("Nova resposta")
   })
 })

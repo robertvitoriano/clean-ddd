@@ -2,15 +2,17 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id"
 import { IAnswersRepository } from "../repositories/answers-repository"
 import { AnswerComment } from "../../enterprise/entities/answer-comment"
 import { IAnswerCommentsRepository } from "../repositories/answer-comments-repository"
+import { ResourceNotFoundError } from "./errors/resource-not-found-error"
+import { failure, Result, success } from "@/core/result"
 
 interface CommentOnAnswerUseCaseRequest {
   authorId: string
   answerId: string
   content: string
 }
-interface CommentOnAnswerUseCaseResponse {
+type CommentOnAnswerUseCaseResponse  = Result<ResourceNotFoundError,{
   answerComment: AnswerComment
-}
+}>
 
 export class CommentOnAnswerUseCase {
   constructor(private answersRepository: IAnswersRepository, private answerCommentsRepository:IAnswerCommentsRepository) {}
@@ -23,7 +25,7 @@ export class CommentOnAnswerUseCase {
     const answer  = await this.answersRepository.findById(answerId)
     
     if(!answer){
-      throw new Error("Answer not found")
+      return failure(new ResourceNotFoundError())
     }
     const answerComment = AnswerComment.create({
       content,
@@ -31,6 +33,6 @@ export class CommentOnAnswerUseCase {
       answerId: new UniqueEntityId(answerId),
     })
     await this.answerCommentsRepository.create(answerComment)
-    return { answerComment }
+    return success({ answerComment })
   }
 }

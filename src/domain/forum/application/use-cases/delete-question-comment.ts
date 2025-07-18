@@ -1,26 +1,29 @@
+import { failure, Result, success } from "@/core/result"
 import { IQuestionCommentsRepository } from "../repositories/question-comments-repository"
+import { NotAllowedError } from "./errors/not-allowed-error"
+import { ResourceNotFoundError } from "./errors/resource-not-found-error"
 
 interface DeleteQuestionCommentUseCaseRequest {
   questionCommentId: string
-  authorId:string
+  authorId: string
 }
 
-interface DeleteQuestionCommentUseCaseResponse {}
+type DeleteQuestionCommentUseCaseResponse = Result<NotAllowedError | ResourceNotFoundError, {}>
 
 export class DeleteQuestionCommentUseCase {
   constructor(private questionCommentRepository: IQuestionCommentsRepository) {}
   async execute({
     questionCommentId,
-    authorId
+    authorId,
   }: DeleteQuestionCommentUseCaseRequest): Promise<DeleteQuestionCommentUseCaseResponse> {
     const questionComment = await this.questionCommentRepository.findById(questionCommentId)
     if (!questionComment) {
-      throw new Error("questionComment not found")
+      return failure(new ResourceNotFoundError())
     }
     if (questionComment.authorId.toString() !== authorId) {
-      throw new Error("Unauthorized")
+      return failure(new NotAllowedError())
     }
     await this.questionCommentRepository.delete(questionComment)
-    return {}
+    return success({})
   }
 }

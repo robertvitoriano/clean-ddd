@@ -25,9 +25,9 @@ describe("COmment on a answer", () => {
       content:'first comment',
       answerId: answer.id.toValue(),
     }
-    const {answerComment }= await sut.execute(commentInfo)
-
-    expect(answerComment.authorId.toValue()).toEqual(commentInfo.authorId)
-    expect(answerComment.content).toEqual(commentInfo.content)
+    const result = await sut.execute(commentInfo)
+    
+    expect(result.value.answerComment.authorId.toValue()).toEqual(commentInfo.authorId)
+    expect(result.value.answerComment.content).toEqual(commentInfo.content)
   })
 })

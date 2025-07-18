@@ -1,4 +1,7 @@
+import { failure, Result, success } from "@/core/result"
 import { IAnswersRepository } from "../repositories/answers-repository"
+import { NotAllowedError } from "./errors/not-allowed-error"
+import { ResourceNotFoundError } from "./errors/resource-not-found-error"
 
 interface EditAnswerUseCaseRequest {
   authorId: string
@@ -6,7 +9,7 @@ interface EditAnswerUseCaseRequest {
   answerId: string
 }
 
-interface EditAnswerUseCaseResponse {}
+type EditAnswerUseCaseResponse =  Result<NotAllowedError| ResourceNotFoundError,{}> 
 
 export class EditAnswerUseCase {
   constructor(private answersRepository: IAnswersRepository) {}
@@ -17,14 +20,14 @@ export class EditAnswerUseCase {
   }: EditAnswerUseCaseRequest): Promise<EditAnswerUseCaseResponse> {
     const answer = await this.answersRepository.findById(answerId)
     if (!answer) {
-      throw new Error("Answer not found")
+      return failure(new ResourceNotFoundError())
     }
     if (answer.authorId.toString() !== authorId) {
-      throw new Error("Unauthorized")
+      return failure(new NotAllowedError())
     }
     answer.content = content
     await this.answersRepository.save(answer)
 
-    return {}
+    return success({})
   }
 }

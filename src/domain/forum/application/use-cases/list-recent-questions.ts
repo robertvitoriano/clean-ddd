@@ -1,12 +1,16 @@
+import { Result, success } from "@/core/result"
 import { Question } from "../../enterprise/entities/question"
 import { IQuestionsRepository } from "../repositories/questions-repository"
 
 interface ListRecentQuestionsCaseRequest {
-  page:number
+  page: number
 }
-interface ListRecentQuestionsCaseResponse {
-  questions: Question[]
-}
+type ListRecentQuestionsCaseResponse = Result<
+  null,
+  {
+    questions: Question[]
+  }
+>
 
 export class ListRecentQuestionsCase {
   constructor(private questionsRepository: IQuestionsRepository) {}
@@ -17,6 +21,6 @@ export class ListRecentQuestionsCase {
       page,
       perPage: 10,
     })
-    return { questions }
+    return success({ questions })
   }
 }
