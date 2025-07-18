@@ -1,26 +1,27 @@
+import { failure, Result, success } from "@/core/result"
 import { IAnswerCommentsRepository } from "../repositories/answer-comments-repository"
 
-interface DeleteAnswerCommentAnswerUseCaseRequest {
+type DeleteAnswerCommentAnswerUseCaseRequest = {
   answerCommentId: string
-  authorId:string
+  authorId: string
 }
 
-interface DeleteAnswerCommentAnswerUseCaseResponse {}
+type DeleteAnswerCommentAnswerUseCaseResponse = Result<string, {}>
 
 export class DeleteAnswerCommentUseCase {
   constructor(private commentAnswersRepository: IAnswerCommentsRepository) {}
   async execute({
     answerCommentId,
-    authorId
+    authorId,
   }: DeleteAnswerCommentAnswerUseCaseRequest): Promise<DeleteAnswerCommentAnswerUseCaseResponse> {
     const commentAnswer = await this.commentAnswersRepository.findById(answerCommentId)
     if (!commentAnswer) {
-      throw new Error("CommentAnswer not found")
+      return failure("CommentAnswer not found")
     }
     if (commentAnswer.authorId.toString() !== authorId) {
-      throw new Error("Unauthorized")
+      return failure("Unauthorized")
     }
     await this.commentAnswersRepository.delete(commentAnswer)
-    return {}
+    return success({})
   }
 }
