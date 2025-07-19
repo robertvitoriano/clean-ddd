@@ -18,6 +18,6 @@ describe("Create question", () => {
     await questionsRepository.create(question)
     const result = await sut.execute({ slug: question.slug.value })
 
-    expect(result.question?.slug.value).toEqual(question.slug.value)
+    expect(result.value.question?.slug.value).toEqual(question.slug.value)
   })
 })

@@ -18,8 +18,8 @@ describe("Create question", () => {
     }
     const answer = await sut.execute(questionInfo)
 
-    expect(answer.question.authorId.toValue()).toEqual(questionInfo.authorId)
-    expect(answer.question.title).toEqual(questionInfo.title)
-    expect(answer.question.content).toEqual(questionInfo.content)
+    expect(answer.value.question.authorId.toValue()).toEqual(questionInfo.authorId)
+    expect(answer.value.question.title).toEqual(questionInfo.title)
+    expect(answer.value.question.content).toEqual(questionInfo.content)
   })
 })

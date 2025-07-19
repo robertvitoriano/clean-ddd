@@ -24,12 +24,12 @@ describe("List answer comments", () => {
     for (let i = 0; i < 30; i++) {
       await answerCommentRepository.create(makeAnswerComment({ answerId: answer.id }))
     }
-    const resultPage1 = await sut.execute(answer.id.toValue(), 1)
-    expect(resultPage1.comments.length).to.equal(10)
-    const resultPage2 = await sut.execute(answer.id.toValue(), 3)
-    expect(resultPage2.comments.length).to.equal(10)
-    const resultPage3 = await sut.execute(answer.id.toValue(), 4)
-    expect(resultPage3.comments.length).to.equal(0)
+    const resultPage1 = await sut.execute({answerId:answer.id.toValue(), page:1})
+    expect(resultPage1.value.comments.length).to.equal(10)
+    const resultPage2 = await sut.execute({answerId:answer.id.toValue(), page:3})
+    expect(resultPage2.value.comments.length).to.equal(10)
+    const resultPage3 = await sut.execute({answerId:answer.id.toValue(), page:4})
+    expect(resultPage3.value.comments.length).to.equal(0)
   })
   it("Should throw an error if answer do not exist", async () => {
     const answer = makeAnswer({})
@@ -37,6 +37,8 @@ describe("List answer comments", () => {
     for (let i = 0; i < 30; i++) {
       await answerCommentRepository.create(makeAnswerComment({ answerId: answer.id }))
     }
-    await expect(sut.execute(answer.id.toValue(), 1)).rejects.toThrowError()
+    const result = await sut.execute({answerId:answer.id.toValue(), page:1})
+    
+    expect(result.isFailure()).toBe(true)
   })
 })

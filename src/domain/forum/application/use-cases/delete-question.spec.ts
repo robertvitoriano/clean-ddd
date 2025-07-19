@@ -24,11 +24,11 @@ describe("Delete question", () => {
     const newQuestion = makeQuestion({})
     await questionsRepository.create(newQuestion)
 
-    expect(async () => {
-      return await sut.execute({
+    const result =  await sut.execute({
         questionId: newQuestion.id.toString(),
         authorId: "test",
       })
-    }).rejects.toThrowError()
+      
+    expect(result.isFailure()).toBe(true)
   })
 })

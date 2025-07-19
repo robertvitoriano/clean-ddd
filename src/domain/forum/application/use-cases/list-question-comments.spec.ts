@@ -24,9 +24,9 @@ describe("List question comments", () => {
     for(let i = 0;i < 30;i++){
       await questionCommentRepository.create(makeQuestionComment({questionId:question.id}))
     }
-    const resultPage1 = await sut.execute(question.id.toValue(), 1)
-    expect(resultPage1.comments.length).to.equal(10)
-
+    const resultPage1 = await sut.execute({questionId:question.id.toValue(), page:1})
+    expect(resultPage1.isSuccess()).toBe(true)
+    expect(resultPage1.value.comments.length).to.equal(10)
   })
     it("Should throw an error if question do not exist", async () => {
     const question = makeQuestion({})
@@ -34,7 +34,8 @@ describe("List question comments", () => {
     for(let i = 0;i < 30;i++){
       await questionCommentRepository.create(makeQuestionComment({questionId:question.id}))
     }
-    await expect(sut.execute(question.id.toValue(), 1)).rejects.toThrowError()
+    const result = await sut.execute({questionId:question.id.toValue(), page:1})
+    expect(result.isSuccess()).toBe(false)
 
   })
 })

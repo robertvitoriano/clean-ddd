@@ -15,7 +15,8 @@ describe("Create an answer", () => {
       questionId: "1",
       content: "Nova resposta",
     })
-    
-    expect(result.value?.answer.content).toEqual("Nova resposta")
+    const answer = await answersRepository.findById(result.value?.answer.id.toValue() as string)
+    expect(answer?.content).toBe("Nova resposta")
+    expect(result.isSuccess()).toEqual(true)
   })
 })

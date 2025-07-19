@@ -25,11 +25,10 @@ describe("Delete answer", () => {
     const newAnswer = makeAnswer({})
     await answersRepository.create(newAnswer)
 
-    expect(async () => {
-      return await sut.execute({
+    const result =await sut.execute({
         answerId: newAnswer.id.toString(),
         authorId: "test",
       })
-    }).rejects.toThrowError()
+    expect(result.isFailure()).toBe(true)
   })
 })

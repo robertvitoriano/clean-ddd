@@ -17,9 +17,9 @@ describe("Create question", () => {
     }
     const resultPage1 = await sut.execute({ page: 1 })
     const resultPage2 = await sut.execute({ page: 2 })
-    expect(resultPage1.questions.length).to.equal(10)
-    expect(resultPage2.questions.length).to.equal(10)
-    expect(resultPage1.questions[0].id).to.not.equal(resultPage2.questions[0].id)
+    expect(resultPage1?.value?.questions.length).to.equal(10)
+    expect(resultPage2?.value?.questions.length).to.equal(10)
+    expect(resultPage1?.value?.questions[0].id).to.not.equal(resultPage2?.value?.questions[0].id)
   })
 
   it("Should be ordered", async () => {
@@ -31,7 +31,7 @@ describe("Create question", () => {
     }
     const resultPage1 = await sut.execute({ page: 1 })
 
-    const isOrdered = resultPage1.questions.every((question, index, arr) => {
+    const isOrdered = resultPage1?.value?.questions.every((question, index, arr) => {
       if (index === 0) return true
       return arr[index - 1].createdAt.getTime() <= question.createdAt.getTime() 
     })

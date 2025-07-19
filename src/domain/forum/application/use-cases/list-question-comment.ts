@@ -1,4 +1,4 @@
-import { failure, Result } from "@/core/result"
+import { failure, Result, success } from "@/core/result"
 import { IQuestionCommentsRepository } from "../repositories/question-comments-repository"
 import { IQuestionsRepository } from "../repositories/questions-repository"
 import { ResourceNotFoundError } from "./errors/resource-not-found-error"
@@ -14,7 +14,7 @@ export class ListQuestionCommentsUseCase {
     private readonly commentsRepository: IQuestionCommentsRepository
   ) {}
 
-  async execute({ questionId, page }: ListQuestionCommentRequest) {
+  async execute({ questionId, page }: ListQuestionCommentRequest):Promise<ListQuestionCommentResponse> {
     const question = await this.questionsRepository.findById(questionId)
 
     if (!question) {
@@ -26,6 +26,6 @@ export class ListQuestionCommentsUseCase {
       perPage: 10,
     })
 
-    return { comments }
+    return success({comments})
   }
 }

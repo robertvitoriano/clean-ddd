@@ -27,11 +27,11 @@ describe("Delete question", () => {
     const questionComment = makeQuestionComment({})
     await questionCommentsRepository.create(questionComment)
 
-    expect(async () => {
-      return await sut.execute({
+    const result = await sut.execute({
         questionCommentId: questionComment.id.toString(),
         authorId: "test",
       })
-    }).rejects.toThrowError()
+      
+    expect(result.isFailure()).toBe(true)
   })
 })

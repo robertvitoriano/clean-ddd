@@ -31,8 +31,7 @@ describe("Edit answer", () => {
       content: "New content",
       authorId: "wrong author id",
     }
-    expect(async () => {
-      return await sut.execute(updatedData)
-    }).rejects.toThrowError()
+    const result = await sut.execute(updatedData)
+    expect(result.isFailure()).toBe(true)
   })
 })
