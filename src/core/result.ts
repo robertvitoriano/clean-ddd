@@ -1,4 +1,3 @@
-//ERROR
 export class Failure<F, S> {
   readonly value: F
 
@@ -14,7 +13,7 @@ export class Failure<F, S> {
     return true
   }
 }
-// SUCCESS
+
 export class Success<F, S> {
   readonly value: S
 
