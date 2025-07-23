@@ -15,6 +15,7 @@ describe("Create question", () => {
       authorId: "1",
       content: "some con",
       title: "title",
+      attachmentIds:['1','2']
     }
     const answer = await sut.execute(questionInfo)
 
