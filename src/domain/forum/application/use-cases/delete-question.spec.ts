@@ -7,9 +7,9 @@ import { InMemoryQuestionAttachmentsRepository } from "@/test/repositories/in-me
 import { makeQuestionAttachment } from "@/test/factories/make-question-attachment"
 import { UniqueEntityId } from "@/core/entities/unique-entity-id"
 
-let questionsRepository: IQuestionsRepository
-let questionAttachmentsRepository: IQuestionAttachmentsRepository
 let sut: DeleteQuestionUseCase
+let questionAttachmentsRepository: IQuestionAttachmentsRepository
+let questionsRepository: IQuestionsRepository
 beforeEach(() => {
   questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
   questionsRepository = new InMemoryQuestionsRepository(questionAttachmentsRepository)

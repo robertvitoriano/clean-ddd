@@ -6,13 +6,16 @@ import { InMemoryAnswersRepository } from "@/test/repositories/in-memory-answers
 import { Answer } from "../../enterprise/entities/answer"
 import { makeAnswer } from "@/test/factories/make-answer"
 import { ListQuestionAnswersUseCase } from "./list-question-answers"
+import { IQuestionAttachmentsRepository } from "../repositories/question-attachments-repository"
+import { InMemoryQuestionAttachmentsRepository } from "@/test/repositories/in-memory-question-attachments-repository"
 
-let questionsRepository: IQuestionsRepository
 let answersRepository: IAnswersRepository
 let sut: ListQuestionAnswersUseCase
-
+let questionsRepository: IQuestionsRepository
+let questionAttachmentsRepository: IQuestionAttachmentsRepository
 beforeEach(() => {
-  questionsRepository = new InMemoryQuestionsRepository()
+  questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
+  questionsRepository = new InMemoryQuestionsRepository(questionAttachmentsRepository)
   answersRepository = new InMemoryAnswersRepository()
   sut = new ListQuestionAnswersUseCase(questionsRepository, answersRepository)
 })

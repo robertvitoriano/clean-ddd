@@ -6,12 +6,14 @@ import { InMemoryQuestionAttachmentsRepository } from "@/test/repositories/in-me
 import { QuestionAttachment } from "../../enterprise/entities/question-attachment"
 import { UniqueEntityId } from "@/core/entities/unique-entity-id"
 import { makeQuestionAttachment } from "@/test/factories/make-question-attachment"
+import { IQuestionAttachmentsRepository } from "../repositories/question-attachments-repository"
 
-let questionsRepository: IQuestionsRepository
-let questionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let sut: EditQuestionUseCase
+let questionsRepository: IQuestionsRepository
+let questionAttachmentsRepository: IQuestionAttachmentsRepository
 beforeEach(() => {
-  questionsRepository = new InMemoryQuestionsRepository()
+  questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
+  questionsRepository = new InMemoryQuestionsRepository(questionAttachmentsRepository)
   questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
 
   sut = new EditQuestionUseCase(questionsRepository, questionAttachmentsRepository)

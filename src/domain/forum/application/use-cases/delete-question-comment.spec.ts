@@ -1,6 +1,3 @@
-import { InMemoryQuestionsRepository } from "@/test/repositories/in-memory-questions-repository"
-import { IQuestionsRepository } from "../repositories/questions-repository"
-import { makeQuestion } from "@/test/factories/make-question"
 import { DeleteQuestionCommentUseCase } from "./delete-question-comment"
 import { IQuestionCommentsRepository } from "../repositories/question-comments-repository"
 import { InMemoryQuestionCommentsRepository } from "@/test/repositories/in-memory-question-comments-repository"

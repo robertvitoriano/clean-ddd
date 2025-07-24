@@ -2,11 +2,15 @@ import { InMemoryQuestionsRepository } from "@/test/repositories/in-memory-quest
 import { IQuestionsRepository } from "../repositories/questions-repository"
 import { ListRecentQuestionsCase } from "./list-recent-questions"
 import { makeQuestion } from "@/test/factories/make-question"
+import { IQuestionAttachmentsRepository } from "../repositories/question-attachments-repository"
+import { InMemoryQuestionAttachmentsRepository } from "@/test/repositories/in-memory-question-attachments-repository"
 
-let questionsRepository: IQuestionsRepository
 let sut: ListRecentQuestionsCase
+let questionsRepository: IQuestionsRepository
+let questionAttachmentsRepository: IQuestionAttachmentsRepository
 beforeEach(() => {
-  questionsRepository = new InMemoryQuestionsRepository()
+  questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
+  questionsRepository = new InMemoryQuestionsRepository(questionAttachmentsRepository)
   sut = new ListRecentQuestionsCase(questionsRepository)
 })
 describe("Create question", () => {

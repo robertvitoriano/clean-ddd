@@ -5,13 +5,17 @@ import { ListQuestionCommentsUseCase } from "./list-question-comment"
 import { IQuestionCommentsRepository } from "../repositories/question-comments-repository"
 import { InMemoryQuestionCommentsRepository } from "@/test/repositories/in-memory-question-comments-repository"
 import { makeQuestionComment } from "@/test/factories/make-question-comment"
+import { InMemoryQuestionAttachmentsRepository } from "@/test/repositories/in-memory-question-attachments-repository"
+import { IQuestionAttachmentsRepository } from "../repositories/question-attachments-repository"
 
-let questionsRepository: IQuestionsRepository
 let questionCommentRepository: IQuestionCommentsRepository
 let sut: ListQuestionCommentsUseCase
 
+let questionsRepository: IQuestionsRepository
+let questionAttachmentsRepository: IQuestionAttachmentsRepository
 beforeEach(() => {
-  questionsRepository = new InMemoryQuestionsRepository()
+  questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
+  questionsRepository = new InMemoryQuestionsRepository(questionAttachmentsRepository)
   questionCommentRepository = new InMemoryQuestionCommentsRepository()
   sut = new ListQuestionCommentsUseCase(questionsRepository, questionCommentRepository)
 })

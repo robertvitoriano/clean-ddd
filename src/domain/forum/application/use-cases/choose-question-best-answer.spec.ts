@@ -6,13 +6,17 @@ import { IQuestionsRepository } from "../repositories/questions-repository"
 import { InMemoryQuestionsRepository } from "@/test/repositories/in-memory-questions-repository"
 import { makeQuestion } from "@/test/factories/make-question"
 import { makeAnswer } from "@/test/factories/make-answer"
+import { InMemoryQuestionAttachmentsRepository } from "@/test/repositories/in-memory-question-attachments-repository"
+import { IQuestionAttachmentsRepository } from "../repositories/question-attachments-repository"
 
+let sut: ChooseQuestionBestAnswerUseCase
 let answersRepository: IAnswersRepository
 let questionsRepository: IQuestionsRepository
-let sut: ChooseQuestionBestAnswerUseCase
+let questionAttachmentsRepository: IQuestionAttachmentsRepository
 beforeEach(() => {
+  questionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository()
+  questionsRepository = new InMemoryQuestionsRepository(questionAttachmentsRepository)
   answersRepository = new InMemoryAnswersRepository()
-  questionsRepository = new InMemoryQuestionsRepository()
   sut = new ChooseQuestionBestAnswerUseCase(answersRepository, questionsRepository)
 })
 describe("Chose question best answer", () => {
