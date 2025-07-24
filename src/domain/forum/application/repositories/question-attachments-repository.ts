@@ -6,5 +6,6 @@ export interface IQuestionAttachmentsRepository {
   delete: (questionattachment: QuestionAttachment) => Promise<void>
   save: (questionattachment: QuestionAttachment) => Promise<void>
   findById: (questionattachmentId: string) => Promise<QuestionAttachment | null>
-  findManyByQuestionId:(questionId:string) => Promise<QuestionAttachment[]>
+  findManyByQuestionId: (questionId: string) => Promise<QuestionAttachment[]>
+  deleteManyByQuestionId: (questionId: string) => Promise<void>
 }

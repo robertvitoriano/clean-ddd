@@ -3,9 +3,13 @@ import { IQuestionAttachmentsRepository } from "@/domain/forum/application/repos
 import { QuestionAttachment } from "@/domain/forum/enterprise/entities/question-attachment"
 
 export class InMemoryQuestionAttachmentsRepository implements IQuestionAttachmentsRepository {
-  async findManyByQuestionId (questionId: string):Promise<QuestionAttachment[]>{
-    return this.questionAttachments
-      .filter(q => q.questionId.toString() ===questionId)
+  async deleteManyByQuestionId(questionId: string): Promise<void> {
+    this.questionAttachments = this.questionAttachments.filter(
+      (q) => q.questionId.toString() !== questionId
+    )
+  }
+  async findManyByQuestionId(questionId: string): Promise<QuestionAttachment[]> {
+    return this.questionAttachments.filter((q) => q.questionId.toString() === questionId)
   }
   public questionAttachments: QuestionAttachment[] = []
   async create(questionAttachment: QuestionAttachment): Promise<void> {

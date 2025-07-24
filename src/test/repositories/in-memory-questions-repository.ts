@@ -1,8 +1,13 @@
 import { PaginationParams } from "@/core/repositories/pagination-params"
+import { IQuestionAttachmentsRepository } from "@/domain/forum/application/repositories/question-attachments-repository"
 import { IQuestionsRepository } from "@/domain/forum/application/repositories/questions-repository"
 import { Question } from "@/domain/forum/enterprise/entities/question"
 
 export class InMemoryQuestionsRepository implements IQuestionsRepository {
+  
+  constructor(
+    private questionAttachmentsRepository: IQuestionAttachmentsRepository
+  ){}
   async findManyRecent({ page, perPage }: PaginationParams): Promise<Question[]> {
     const offset = perPage * (page - 1)
     return this.questions
@@ -19,6 +24,7 @@ export class InMemoryQuestionsRepository implements IQuestionsRepository {
   }
   async delete(question: Question): Promise<void> {
     this.questions = this.questions.filter((item) => item.id !== question.id)
+    await this.questionAttachmentsRepository.deleteManyByQuestionId(question.id.toValue())
   }
   async findById(questionId: string): Promise<Question | null> {
     return this.questions.find((question) => question.id.toString() === questionId) || null
